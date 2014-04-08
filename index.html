@@ -1,0 +1,50 @@
+<!doctype html>
+<html ng-app="myApp">
+    <head>
+        <link type="text/css" rel="stylesheet"  href="css/style.css" >
+    </head> 
+    <body>
+        <div ng-controller="PlayerController" ng-model="volumenBar" id="player-container">            
+            <div id="infobox">
+                <div id="cover"></div> 
+                <div id="trackinfo">
+                    <p><b>Artist:</b>{{currentArtist}}</p>
+                    <p><b>Song:</b>  {{currentSong}}</p>           
+                </div>                
+            </div>
+            <audio id="myaudio" ng-model="audio" >
+                Your browser does not support the <code>audio</code> element.                   
+            </audio>
+            
+            <div id="cmanual">
+                <div ng-click="play()" class="play" ng-show="!playing"></div>
+                <div ng-click="pause()" class="pause" ng-show="playing"></div> 
+                <div ng-click="prev()" class="back" ng-show="true"></div> 
+                <div ng-click="next()" class="next" ng-show="true"></div> 
+                
+            </div>
+
+            <progressbar ng-enabled="progressBar.enabled" min="0" max="progressBar.max" at="progressBar.at" ></progressbar>
+            
+            <div id="time">
+                <b>{{ current}}/{{ duration}}</b>
+            </div>
+
+            <div id="box">	
+                <span class="volume"></span> 
+                <span class="tooltip"></span> 
+                <volumebar ng-enabled="volumenBar.enabled" min="0" max="volumenBar.max" at="volumenBar.at" ></volumebar>               
+            </div>
+            <br><br>
+            {{data}}
+            <br><br>
+            {{data2}}
+        </div>
+    </body>
+    <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    <script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.9/angular.min.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/volume.js"></script>
+    <script src="js/progressBar.js"></script>
+</html>

@@ -1,0 +1,114 @@
+<!doctype html>
+<html ng-app="myApp">
+    <head>
+        <link type="text/css" rel="stylesheet"  href="css/style.css" >
+    </head>   
+    <body style="margin-left: 5%; width: 80%; text-align: justify">
+        <div>
+            <h1>Binding</h1>
+            <ul>
+                <li> agregar  ng-app a la etiqueta html </li>
+                <li> un campo se referencia mediante el uso de ng-model="var_name"</li>
+                <li> la salida del dato se hace colocando { { var_name} } (sin espacios)</li>
+            </ul>
+            <input id="aaa" type="text" ng-model="yourName" placeholder="Enter a name here">
+            <h4>lo que digites se vera aqui, {{yourName}}!</h4>
+        </div><!--Binding-->
+
+        <div>
+            <h1>$scope, Controllers</h1>
+            <p>
+                $scope es un objeto atado a la vista de un elemento DOM, en el MVC viene siendo el modelo, solo
+                los miembros de este controlador tienen acceso a dicho dato.
+                $rootScope es el objeto de mas alto nivel creado automaticamente para cada app en angular,lo que se
+                guarde aqui sera visible de manera global entre los controlladores.
+            </p>
+            <p>
+                Para acceder al $scope se ocupa crear un objeto contenedor en js, para dicho fin se extiende
+                el modulo angular de la libreria. Creamos un javascript y dentro colocamos:
+            </p>
+            <ul>
+                <li> var app = angular.module('myApp', []); </li>
+                <li> var app  es el nombre del contenedor de todo el modulo </li>
+                <li> MyApp es el nombre del modulo </li>
+                <li> la instanciacion del modulo o app se hace usando la etiqueta ng-app 
+                    que vimos al incio  ng-app="myApp"</li>
+            </ul>
+            <div>
+                <p> Luego, creamos una funcion que corre al inicializarse el modulo, asignado ciertas variables
+                    a utilizar</p>
+                app.run(function($rootScope) {<br>
+                $rootScope.name = "Nombre X ";<br>
+                });<br>
+                <p> La salida de la  info esta guardada de manera global</p>  
+                <h4>{{ name}}</h4>
+            </div>
+            <h1>Controllers</h1>
+            <p>
+                Para crear un controlador se le agrega a la aplicacion (app) una 
+                extencion del controlador de angular y se le agrega al modelo. 
+                de la siguente manera:<br><br>
+                app.controller('MyController', function($scope) {<br>
+                $scope.person = {<br>
+                name: "Otro nombre X"<br>
+                };<br>
+            </p>
+            <ul>
+                <li> MyController es nombre del controlador </li>
+                <li> un campo se referencia mediante el uso de ng-model="var_name"</li>
+                <li> la salida del dato se hace colocando { { var_name} } sin espacios</li>
+            </ul>
+            <div ng-controller="MyController">
+                <h4>{{ person.name}}</h4>
+            </div>
+            <div>  
+                <p> Tambien se pueden anidar controladores, con esto los el scope del padre tiene visibilidad
+                    en el controlador hijo. Se puede llamar un tipo de "Herencia" se implementa un 
+                    ng-controller="ParentController" en algun elemento html y dentro de este otro elmemento html
+                    con el ng-controller="ChildController"</p>
+            </div>
+            <div ng-controller="ParentController">
+                <div ng-controller="ChildController">
+                    <input type="text" ng-model="person.name" placeholder="Name"></input>
+                    <a ng-click="sayHello()">Click me to Say hello</a>
+                    <br>
+                    estado del objeto person <b>{{ person}}</b>
+                </div>          
+            </div>
+            <br>
+            <div ng-controller="PlayerController" ng-model="volumenBar">            
+                <input type="text" ng-model="volumenBar.at"/>              
+                <br><br>
+                <audio id="myaudio" ng-model="audio" >
+                    Your browser does not support the <code>audio</code> element.                   
+                </audio>
+                <br>
+                <div id="box">	
+                    <span class="tooltip"></span> <!-- Tooltip -->
+                    <volumebar ng-enabled="volumenBar.enabled" min="0" max="volumenBar.max" at="volumenBar.at" ></volumebar>
+                    <span class="volume"></span> <!-- Volume -->
+                </div>
+                <div id="cmanual">
+                <button ng-click="play()" class="button" ng-show="!playing">Play</button>
+                <button ng-click="pause()" class="button alert" ng-show="playing">Pause</button>
+                <progressbar ng-enabled="progressBar.enabled" min="0" end="progressBar.end" 
+                               start="progressBar.start" ></progressbar>
+                </div>
+                 <div>Time: <b>{{ current}}/{{ duration}}</b></div>
+                                
+                <br>
+                Playing audio: <b>{{ playing}}</b>
+            </div>
+        
+            <br>
+            
+        </div><!--$scope, Controllers-->
+<br><br><br>
+</body>
+<script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+<script src="http://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.0.7/angular.min.js"></script>
+<script src="js/main2.js"></script>
+<script src="js/volume.js"></script>
+<script src="js/progressBar.js"></script>
+</html>
